@@ -69,10 +69,25 @@ const calculateStockPriceDiffer = () => {
 }
 
 class StockInstance {
-    constructor(stockData) {
-        this.data = stockData
+    // constructor(stockData) {
+    //     this.data = stockData
+    // }
+    getStockName(data){}
+    getStockData(data){return data}
+    stockValue(data){
+        return data.splice(0, data.length - 1)
     }
+    stochasticValue(data){}
+    stochasticRsi(data){}
+    priceDifferValue(data){
+        data.splice(0, data.length - 2)
+        let differ = (data[1].close - data[0].close).toFixed(5)
+        return data[0].close < data[1].close ? `+${differ}` : `${differ}`
+    }
+    advice(){}
 }
+
+let newStock = new StockInstance()
 
 const dataModified = (stockData) => { 
     let modified = [];
@@ -104,9 +119,6 @@ export const addStock = ( stockFunction, currentStock, apikey ) => (dispatch) =>
             return response
         } console.log('stock updated error')
     }).then( response => {
-        let lastPeriod = [...response]
-        lastPeriod.splice(0, response.length - 2)
-        let diff = (lastPeriod[1].close - lastPeriod[0].close).toFixed(5)
-        dispatch(setPriceDifference(lastPeriod[0].close < lastPeriod[1].close ? `+${diff}` : `${diff}`))
+        dispatch(setPriceDifference(newStock.priceDifferValue(response)))
     })
 }

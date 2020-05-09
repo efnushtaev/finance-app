@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { stockReducer } from "./reducers/stockReducer";
 import thunkMiddlewear from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
@@ -9,7 +9,10 @@ let reducers = combineReducers({
 })
 
 
-let store = createStore(reducers, applyMiddleware(thunkMiddlewear));
+// let store = createStore(reducers, applyMiddleware(thunkMiddlewear));
+//redux devtool extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddlewear)));
 
 window.store = store.getState()
 

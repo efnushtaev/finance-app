@@ -1,9 +1,13 @@
 import React from 'react'
-import StockChartPanel from './stockChartPanel/StockChartPanel'
+import StockPanel from './stockPanel/StockPanel'
+import StockPickerContainer from './../StockPickerContainer'
 
 const MainContent = () => {
     return (
-        <StockChartPanel />
+        <>
+            <StockPickerContainer />
+            <StockPanel />
+        </>
     )
 }
 

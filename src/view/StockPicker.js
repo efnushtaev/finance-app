@@ -19,12 +19,12 @@ const StockPickerForm = (props) => {
 const StockPickerFormReduxForm = reduxForm({form: 'stockPickerForm'})(StockPickerForm);
 
 const StockPicker = (props) => {
-    let addNewStock = (values) => {
+    let addNewObservableStock = (values) => {
         props.addStock(props.stockFunction, values.stock, props.apiKey)
     }
     return (
         <StyledWrapper>
-            <StockPickerFormReduxForm onSubmit={addNewStock}/>
+            <StockPickerFormReduxForm onSubmit={addNewObservableStock}/>
         </StyledWrapper>
 
     )

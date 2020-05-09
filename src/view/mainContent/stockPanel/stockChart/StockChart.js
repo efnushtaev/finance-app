@@ -52,12 +52,13 @@ class StockChart extends React.Component {
       stock:this.props.stock
     }
   }
+
   shouldComponentUpdate(prevProps, prevState) {
-    console.log('updated' + this.props.stock)
+    console.log('rerender')
     if(this.props.stock !== prevState.stock) {return true} return false
   }
-  handleTooltip({ event, data, xStock, xScale, yScale }) {
-    
+
+  handleTooltip({ event, data, xStock, xScale, yScale }) {  
     const { showTooltip } = this.props;
     const { x } = localPoint(event);
     const x0 = xScale.invert(x);
@@ -74,9 +75,8 @@ class StockChart extends React.Component {
       tooltipTop: yScale(d.close)
     });
   }
-  render() {
-  console.log('render' + this.props.stock)
 
+  render() {
     const width = 1000;
     const height = 500;
     const margin = { top: 0, bottom: 0, left: 0, right: 0 };
@@ -110,11 +110,11 @@ class StockChart extends React.Component {
       
       <div>
         <svg ref={s => (this.svg = s)} width={width} height={height}>
-          <rect x={0} y={0} width={width} height={height} fill="blue" rx={14} />
+          <rect x={0} y={0} width={width} height={height} fill="#fff" rx={14} />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#fff" stopOpacity={1} />
-              <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.2} />
+              <stop offset="0%" stopColor="#000" stopOpacity={1} />
+              <stop offset="100%" stopColor="#000" stopOpacity={0.8} />
             </linearGradient>
           </defs>
           <GridRows
@@ -179,7 +179,7 @@ class StockChart extends React.Component {
             }
             onMouseLeave={event => hideTooltip()}
           />
-          {tooltipData && (
+          {tooltipData && console.log('tooltip') && (
             <g>
               <Line
                 from={{ x: tooltipLeft, y: 0 }}

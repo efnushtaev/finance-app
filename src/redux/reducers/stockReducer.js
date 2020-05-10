@@ -8,9 +8,6 @@ const apikey = constant.apiKey;
 const ADD_NEW_OBSERVABLE_STOCK = 'ADD_NEW_OBSERVABLE_STOCK';
 
 let initialState = {
-    currentStock: '',
-    watchList: [],
-    portfolio: [],
     observableStock: [
         {
             stockName: '',
@@ -19,12 +16,11 @@ let initialState = {
             priceDifferValue: '',
             advice: '',
             stochasticValue: '',
-            stochasticRsi: ''
+            rsiValue: ''
         }
     ],
     watchList: [],
     portfolioList: [],
-    priceDifferenceForPeriod: '',
     stockFunction,
     apikey,
     stockData: null 
@@ -42,7 +38,7 @@ export const stockReducer = (state = initialState, action) => {
                     priceDifferValue: action.priceDifferValue,
                     advice: '',
                     stochasticValue: '',
-                    stochasticRsi: ''
+                    rsiValue: ''
                 }]
             }
         }
@@ -71,7 +67,8 @@ export const addStock = ( stockFunction, currentStock, apikey ) => (dispatch) =>
                 newStock.getStockName(res), 
                 newStock.getStockData(res), 
                 newStock.getStockValue(res), 
-                newStock.getPriceDifferValue(res))
+                newStock.getPriceDifferValue(res)
+                )
             )
         }
     })

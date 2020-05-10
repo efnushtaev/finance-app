@@ -20,7 +20,9 @@ export default class StockInstance {
     }
 
     getStockValue(data){
-        return this.stockDataModified(data).splice(0, data.length - 1)
+        let stockData = this.stockDataModified(data)
+        debugger
+        return stockData[stockData.length - 1].close
     }
 
     getPriceDifferValue(data){

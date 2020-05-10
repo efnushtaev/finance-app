@@ -1,17 +1,26 @@
 import React from 'react';
 import StockChartContainer from './stockChart/StockChartContainer'
-import StockChartBarContainer from './stockChartBar/StockChartBarContainer';
+import StockChartBar from './stockChartBar/StockChartBar';
 import { connect } from 'react-redux';
 
 class StockChartPanelContainer extends React.Component {
 
     render() {
-        return(
+        return (
             this.props.observableStock.map(e => {
-                return  <div>
-                            <StockChartBarContainer priceDifferValue={e.priceDifferValue}/>
-                            <StockChartContainer stockData={e.stockData}/>
-                        </div>
+                return (
+                    <div>
+                        <StockChartBar
+                            stockName={e.stockName}
+                            stockValue={e.stockValue}
+                            priceDifferValue={e.priceDifferValue}
+                            advice={e.advice}
+                            stochasticValue={e.stochasticValue}
+                            rsiValue={e.rsiValue}
+                        />
+                        <StockChartContainer stockData={e.stockData}/>
+                    </div>
+                )
             })
         )
     }

@@ -1,8 +1,9 @@
 import React from 'react';
 
-const StockChartBar = ({priceDiffer}) => {
+const StockChartBar = ({priceDifferValue}) => {
+    
     return (
-        <span style={{float:"right"}}>{priceDiffer}</span>
+        <span style={{float:"right"}}>{priceDifferValue}</span>
     )
 }
 

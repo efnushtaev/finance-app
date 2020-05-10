@@ -5,9 +5,7 @@ import StockInstance from './../../utilities/StockInstance'
 const stockFunction = constant.stockFunction;
 const apikey = constant.apiKey;
 
-const   UPDATE_CURRENT_DATA_STOCK = 'UPDATE_CURRENT_DATA_STOCK',
-        SET_PRICE_DIFFERENCE = "SET_PRICE_DIFFERENCE", 
-        ADD_NEW_OBSERVABLE_STOCK = 'ADD_NEW_OBSERVABLE_STOCK';
+const ADD_NEW_OBSERVABLE_STOCK = 'ADD_NEW_OBSERVABLE_STOCK';
 
 let initialState = {
     currentStock: '',
@@ -48,29 +46,18 @@ export const stockReducer = (state = initialState, action) => {
                 }]
             }
         }
-        // case UPDATE_CURRENT_DATA_STOCK: {
-        //     return {
-        //         ...state,
-        //         observableStock: [...state.observableStock, action.payload],
-        //         stockData: [...action.payload]
-        //     }
-        // }
-        // case SET_PRICE_DIFFERENCE: {
-        //     return {
-        //         ...state,
-        //         priceDifferenceForPeriod: action.payload
-        //     }
-        // }
-
         default:
             return state
     }
 }
 
-export const addNewObservableStock = (stockName, stockData, stockValue, priceDifferValue) => ({type: ADD_NEW_OBSERVABLE_STOCK, stockName, stockData, stockValue, priceDifferValue})
-export const updateCurrentDataStock = payload => ({type: UPDATE_CURRENT_DATA_STOCK, payload})
-export const setPriceDifference = payload => ({type:SET_PRICE_DIFFERENCE, payload})
-
+export const addNewObservableStock = (stockName, stockData, stockValue, priceDifferValue) => ({
+    type: ADD_NEW_OBSERVABLE_STOCK, 
+    stockName, 
+    stockData, 
+    stockValue, 
+    priceDifferValue
+})
 
 let newStock = new StockInstance()
 
@@ -86,9 +73,6 @@ export const addStock = ( stockFunction, currentStock, apikey ) => (dispatch) =>
                 newStock.getStockValue(res), 
                 newStock.getPriceDifferValue(res))
             )
-            // dispatch(updateCurrentDataStock(newStock.getStockData(response)));
-            // dispatch(setPriceDifference(newStock.getPriceDifferValue(response)))
         }
     })
-
 }

@@ -9,15 +9,6 @@ import { localPoint } from '@vx/event';
 import { bisector } from 'd3-array';
 import { timeFormat } from 'd3-time-format';
 import demoData from '../../../StockDataJSON.json';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-
-
-
-
-
-
-let orig = demoData
 
 // Stock data transformation ---- json to array [{date:"date", close:"close"}]
 

@@ -25,10 +25,10 @@ class StockChartContainer extends React.Component{
   //   return reverse
   // }
   
-  componentDidMount() {
-    this.props.updateCurrentDataStock(this.props.currentStockData)
-    console.log("componentChart mount")
-  }
+  // componentDidMount() {
+  //   this.props.updateCurrentDataStock(this.props.currentStockData)
+  //   console.log("componentChart mount")
+  // }
 
 
 

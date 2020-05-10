@@ -47,16 +47,19 @@ const bisectDate = bisector(d => new Date(d.date)).left;
 class StockChart extends React.Component {
   constructor(props) {
     super(props);
-    this.handleTooltip = this.handleTooltip.bind(this);
-    this.state={
-      stock:this.props.stock
-    }
+    // this.handleTooltip = this.handleTooltip.bind(this);
+    // this.state={
+    //   stock: props.stock
+    // }
   }
 
-  shouldComponentUpdate(prevProps, prevState) {
-    console.log('rerender')
-    if(this.props.stock !== prevState.stock) {return true} return false
-  }
+  // shouldComponentUpdate(prevProps, prevState) {
+  //   console.log()
+  //   if(this.props !== prevProps) {
+  //     console.log('chart updated')
+  //     return true} return false
+    
+  // }
 
   handleTooltip({ event, data, xStock, xScale, yScale }) {  
     const { showTooltip } = this.props;
@@ -81,7 +84,7 @@ class StockChart extends React.Component {
     const height = 500;
     const margin = { top: 0, bottom: 0, left: 0, right: 0 };
     const {
-      
+      tooltipOpen,
       hideTooltip,
       tooltipData,
       tooltipTop,
@@ -179,7 +182,7 @@ class StockChart extends React.Component {
             }
             onMouseLeave={event => hideTooltip()}
           />
-          {tooltipData && console.log('tooltip') && (
+          {tooltipData && (
             <g>
               <Line
                 from={{ x: tooltipLeft, y: 0 }}

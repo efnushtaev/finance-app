@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 
 class StockChartBarContainer extends React.Component {
     render (){
-
         return (
-
             <StockChartBar priceDiffer={this.props.priceDiffer}/>
         )
     }
 }
+
 let mapStateToProps = (state) => ({
     priceDiffer: state.stockData.priceDifferenceForPeriod
 })

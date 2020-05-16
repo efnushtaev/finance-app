@@ -14,15 +14,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
+import StockPickerContainer from './../StockPickerContainer'
+
 
 import styles from './LeftSidebar.module.scss'
 
-
-const drawerWidth = 240;
+const drawerWidth = 290;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-
     display: 'flex',
   },
   appBar: {
@@ -57,11 +57,11 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition:'.3s',
+    transition:'.2s',
     marginLeft: -drawerWidth,
   },
   contentShift: {
-    transition:'.3s',
+    transition:'.2s',
     marginLeft: 0,
   },
 }));
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 export default function LeftSidebar() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [openList, setOpenList] = React.useState(true);
 
   const handleClick = () => {
@@ -101,36 +101,30 @@ export default function LeftSidebar() {
             {theme.direction === 'ltr' ? "<-" : "->" }
           </IconButton>
         </div>
+        <StockPickerContainer />
+
         <Divider />
+
         <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <span>adadadasd</span>
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItem>
-          <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          asd 
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {openList ? '->' : '<-'}
-      </ListItem>
-          <Collapse in={openList} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              star
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItem>
-        </List>
-      </Collapse>
-       
-        </List>
-      </Collapse>
+          <List component="div" disablePadding>
+            <ListItem button onClick={handleClick}>
+              <ListItemIcon>asd</ListItemIcon>
+              <ListItemText primary="Inbox" />
+              {openList ? '->' : '<-'}
+            </ListItem>
+            <Collapse in={openList} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button className={classes.nested}>
+                  <ListItemIcon>star</ListItemIcon>
+                  <ListItemText primary="Starred" />
+                </ListItem>
+              </List>
+            </Collapse>
+          </List>
+        </Collapse>
+
         <Divider />
+        
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>

@@ -6,8 +6,8 @@ export default class StockInstance {
             for (let [key, value] of Object.entries(stockData)) {
                 modified.push({date:key + 'T07:00:00.000Z', close:value['4. close']}) 
             }
-            let result = modified.reverse()    
-            return result
+            console.log(data)
+            return modified.reverse()
         } return null
     }
 
@@ -21,7 +21,6 @@ export default class StockInstance {
 
     getStockValue(data){
         let stockData = this.stockDataModified(data)
-        debugger
         return stockData[stockData.length - 1].close
     }
 
@@ -35,4 +34,5 @@ export default class StockInstance {
     stochasticValue(){}
     stochasticRsi(){}
     advice(){}
+
 }

@@ -6,9 +6,9 @@ height: 100%;
 width: 100%;
 display: flex;
 flex-direction: row;
-&>*{
-    padding:10px
-}
+    &>*{
+        padding:10px
+    }
 `
 
 const StockChartBar = ({
@@ -17,7 +17,12 @@ const StockChartBar = ({
     priceDifferValue,
     advice,
     stochasticValue,
-    rsiValue
+    rsiValue,
+    id,
+    deleteObservableStock,
+    addStockToPortfolio,
+    addStockToWatchlist
+
 }) => {
     return stockName ?
         <StyledWrapper>
@@ -37,10 +42,10 @@ const StockChartBar = ({
                 <div>Rsi:{rsiValue}</div>
             </div>
             <div>
-                <span>AddToPortfolio</span>
-                <span>AddToWatchlist</span>
+                <button onClick={() => {addStockToPortfolio(stockName)} }>AddToPortfolio</button>
+                <button onClick={() => {addStockToWatchlist(stockName)} }>AddToWatchlist</button>
             </div>
-            <div>x</div>
+            <button onClick={() => {deleteObservableStock(id)} }>x</button>
             <span style={{float:"right"}}>{priceDifferValue}</span>
         </StyledWrapper> :
         null

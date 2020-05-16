@@ -1,6 +1,6 @@
 import React from 'react';
 import StockPicker from './StockPicker';
-import { addStock } from './../redux/reducers/stockReducer';
+import { addStockToObservable} from './../redux/reducers/stockReducer';
 import { connect } from 'react-redux';
 
 class StockPickerContainer extends React.Component {
@@ -16,4 +16,4 @@ let mapStateToProps = (state) => ({
     apiKey: state.stockData.apiKey
 })
 
-export default connect(mapStateToProps, {addStock})(StockPickerContainer)
+export default connect(mapStateToProps, {addStockToObservable})(StockPickerContainer)

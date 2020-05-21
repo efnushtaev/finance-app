@@ -1,5 +1,5 @@
 import React from 'react';
-import {stockReducer, addStockToWatchlist, addStockToPortfolio} from './stockReducer';
+import {stockReducer, addStockToWatchlist, addStockToPortfolio, shiftedSidebar} from './stockReducer';
 
 it('length of an watchList array should be incremented', () => {
     let action = addStockToWatchlist('set to watchList tested');
@@ -17,4 +17,13 @@ it('length of an portfolioList array should be incremented', () => {
     }
     let newState = stockReducer(state, action)
     expect(newState.portfolioList.length).toBe(1)
+})
+
+it('value should be true', () => {
+    let action = shiftedSidebar('shifting sidebar tested');
+    let state = {
+        isSidebarOpen: true
+    }
+    let newState = stockReducer(state, action)
+    expect(newState.isSidebarOpen).toBe(false)
 })

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { stockReducer } from "./reducers/stockReducer";
 import thunkMiddlewear from 'redux-thunk';
-import {reducer as formReducer} from 'redux-form';
+import { reducer as formReducer } from 'redux-form';
 
 let reducers = combineReducers({
     stockData: stockReducer,

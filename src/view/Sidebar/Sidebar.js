@@ -1,141 +1,57 @@
+import React from "react";
+import Switch from "@material-ui/core/Switch";
+import Paper from "@material-ui/core/Paper";
+import Slide from "@material-ui/core/Slide";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { makeStyles } from "@material-ui/core/styles";
 
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import StockPickerContainer from '../StockPickerContainer'
-
-
-import styles from './Sidebar.module.scss'
-
-const drawerWidth = 290;
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    height: '100vh'
   },
-  appBar: {
-    transition: '.3s'
+  SomeContent: {
+    background: '#f1f1f1',
+    height: "100%",
+    boxSizing: 'border-box'
   },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition:'.3s',
+  wrapper: {
+    height: '100%',
+    width: 100 + theme.spacing(2)
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  paper: {
+    left: 100,
+    zIndex: 1,
+    position: "relative",
+    margin: theme.spacing(1)
   },
-  hide: {
-    display: 'none',
+  svg: {
+    width: 100,
+    height: 100
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition:'.2s',
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition:'.2s',
-    marginLeft: 0,
-  },
+  polygon: {
+    fill: theme.palette.common.white,
+    stroke: theme.palette.divider,
+    strokeWidth: 1
+  }
 }));
 
-export default function Sidebar({isSidebarOpen}) {
-  
+const SomeContent = React.forwardRef((props, ref) => <div {...props} ref={ref}>Hello, World!</div>);
+
+export default function SimpleSlide({isSidebarOpen}) {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [openList, setOpenList] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
 
-  const handleClick = () => {
-    setOpenList(!openList)
-  }
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleChange = () => {
+    setChecked(prev => !prev);
   };
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-
-     
-      <Drawer
-        className={classes.drawer + ' ' + styles.drawerInside}
-        variant="persistent"
-        anchor="left"
-        open={isSidebarOpen}
-
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? "<-" : "->" }
-          </IconButton>
-        </div>
-        <StockPickerContainer />
-
-        <Divider />
-
-        <Collapse in={isSidebarOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button onClick={handleClick}>
-              <ListItemIcon>asd</ListItemIcon>
-              <ListItemText primary="Inbox" />
-              {openList ? '->' : '<-'}
-            </ListItem>
-            <Collapse in={openList} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItem button className={classes.nested}>
-                  <ListItemIcon>star</ListItemIcon>
-                  <ListItemText primary="Starred" />
-                </ListItem>
-              </List>
-            </Collapse>
-          </List>
-        </Collapse>
-
-        <Divider />
-        
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? "inbox" : "mail"}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      
-</div>
+      <div className={classes.wrapper}>
+        <Slide direction="right" in={isSidebarOpen} mountOnEnter unmountOnExit>
+        <SomeContent className={classes.SomeContent}/>
+        </Slide>
+      </div>
+    </div>
   );
 }

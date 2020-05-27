@@ -69,6 +69,7 @@ export const addStockToPortfolio = stockName => ({type:ADD_STOCK_TO_PORTFOLIO, s
 export const addStockToObservable = ( stockFunction, currentStock, apikey ) => (dispatch) => {
     StockAPI.getStock( stockFunction, currentStock, apikey )
     .then( res => {
+        debugger
         if ('Error Message' in res) {
             return 'error'
         } else {

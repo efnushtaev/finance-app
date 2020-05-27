@@ -1,33 +1,55 @@
-// import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import MainContent from './view/mainContent/MainContent';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import React from 'react'
-import Sidebar from './view/Sidebar/Sidebar';
-import TopSidebar from './view/topSidebar/TopSidebar';
 import styled from 'styled-components';
-import {shiftSidebar} from './redux/reducers/stockReducer'
+import { shiftSidebar } from './redux/reducers/stockReducer';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Sidebar from './view/Bars/Sidebar';
+import TopNavbar from './view/Bars/TopNavbar';
+import StockChartPanelContainer from './view/mainContent/stockPanel/StockChartPanelContainer';
 
-const StyledWrapper = styled.section `
-  margin-left: auto;
-  margin-right: auto;
-  &>.opened {
-    position: relative;
-    left: 200px
-  }
-`
+const drawerWidth = 240;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  content: {
+    position: 'relative',
+    top: '80px',
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+}));
 
-function App(props) {
+const App = (props) => {
+  const classes = useStyles();
+  
+  const [open, setOpen] = React.useState(false);
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
+
   return (
-    <StyledWrapper>
-        <Sidebar isSidebarOpen={props.isSidebarOpen} />
-        <div className={'mainContent' + (props.isSidebarOpen &&  ' opened')}>
-          <MainContent 
-            shiftSidebar={props.shiftSidebar}
-          />
-        </div>
-    </StyledWrapper>
+    <div className={classes.root}>
+      <TopNavbar handleDrawerOpen={handleDrawerOpen} open={open}/>
+      <Sidebar handleDrawerClose={handleDrawerClose} open={open}/>
+      <main className={clsx(classes.content, {[classes.contentShift]: open })}>
+          <StockChartPanelContainer />
+      </main>
+    </div>
   );
 }
 

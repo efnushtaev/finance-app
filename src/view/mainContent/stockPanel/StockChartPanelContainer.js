@@ -3,14 +3,14 @@ import StockChartContainer from './stockChart/StockChartContainer'
 import StockChartBar from './stockChartBar/StockChartBar';
 import { connect } from 'react-redux';
 import { deleteObservableStock, addStockToPortfolio, addStockToWatchlist } from '../../../redux/reducers/stockReducer';
+import { getObservableStock } from '../../../redux/Selectors/stockSelectors';
 
 class StockChartPanelContainer extends React.Component {
-
     render() {
         return (
             this.props.observableStock.map((e, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <StockChartBar
                             id={index}
                             stockName={e.stockName}
@@ -32,7 +32,7 @@ class StockChartPanelContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    observableStock: state.stockData.observableStock
+    observableStock: getObservableStock(state)
 })
 
 export default connect(mapStateToProps, {deleteObservableStock, addStockToPortfolio, addStockToWatchlist})(StockChartPanelContainer)

@@ -1,38 +1,30 @@
-export default class StockInstance {
-    stockDataModified(data) {
-        let stockData = data["Time Series (Daily)"];
-        let modified = [];
-        if (stockData != null) {
-            for (let [key, value] of Object.entries(stockData)) {
-                modified.push({date:key + 'T07:00:00.000Z', close:value['4. close']}) 
-            }
-            console.log(data)
-            return modified.reverse()
-        } return null
-    }
-
-    getStockName(data){
-        return data['Meta Data']['2. Symbol']
-    }
-
-    getStockData(data){
-        return this.stockDataModified(data)
-    }
-
-    getStockValue(data){
-        let stockData = this.stockDataModified(data)
-        return stockData[stockData.length - 1].close
-    }
-
-    getPriceDifferValue(data){
-        let modifiedData = this.stockDataModified(data)
-        modifiedData.splice(0, modifiedData.length - 2)
-        let differ = (modifiedData[1].close - modifiedData[0].close).toFixed(5)
-        return modifiedData[0].close < modifiedData[1].close ? `+${differ}` : `${differ}`
-    }
-    
-    stochasticValue(){}
-    stochasticRsi(){}
-    advice(){}
-
+const stockDataModified = data => {
+    let stockTimeframe = "Time Series (Daily)";
+    let stockData = data[stockTimeframe];
+    let resultData = [];
+    if (stockData != null) {
+        for (let [key, value] of Object.entries(stockData)) {
+            resultData.push({date:key + 'T07:00:00.000Z', close:value['4. close']}) 
+        }
+        return resultData.reverse()
+    } return null
 }
+
+const getCurrentStockValue = data => {
+    return data[data.length - 1].close
+}
+
+const getPriceDifferValue = data => {
+    let differ = (data[data.length - 1].close - data[data.length - 2].close).toFixed(5)
+    return data[0].close < data[1].close ? `+${differ}` : `${differ}`
+}
+
+export const stockInstance = data => ({
+        stockName: data['Meta Data']['2. Symbol'],
+        stockData: stockDataModified(data),
+        stockValue: getCurrentStockValue(stockDataModified(data)),
+        priceDifferValue: getPriceDifferValue(stockDataModified(data)),
+        advice: '',
+        stochasticValue: '',
+        rsiValue: ''
+    })

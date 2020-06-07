@@ -1,15 +1,12 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme, fade } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 
-import StockPickerContainer from './../StockPickerContainer';
+import StockPickerContainer from './SearchField/StockPickerContainer';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +79,6 @@ const TopNavbar = (props) => {
     <AppBar
       position="fixed"
       className={classes.appBar}
-      // className={clsx(classes.appBar, {[classes.appBarShift]: props.open})}
     >
       <Toolbar>
         <IconButton
@@ -91,7 +87,6 @@ const TopNavbar = (props) => {
           onClick={props.handleDrawerOpen}
           edge="start"
           className={classes.menuButton}
-          // className={clsx(classes.menuButton, props.open && classes.hide)}
         >
         <MenuIcon />
         </IconButton>

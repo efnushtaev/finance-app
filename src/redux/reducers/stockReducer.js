@@ -1,25 +1,23 @@
 import { StockAPI } from "../../data/api";
-import { constant } from './../../config/constant';
-import StockInstance from './../../utilities/StockInstance';
-import { stockInstance } from './../../utilities/StockInstanceFunc';
+import { constants } from './../../config/constants';
+import { stockInstance } from './../../utilities/StockInstance';
+import { stopSubmit } from "redux-form";
 
-const stockFunction = constant.stockFunction;
-const apikey = constant.apiKey;
+const sourceDataType = constants.sourceDataType;
+const apikey = constants.apiKey;
 
-const ADD_NEW_OBSERVABLE_STOCK = 'ADD_NEW_OBSERVABLE_STOCK';
-const DELETE_OBSERVABLE_STOCK = 'DELETE_OBSERVABLE_STOCK';
-const ADD_STOCK_TO_WATCHLIST = 'ADD_STOCK_TO_WATCHLIST';
-const ADD_STOCK_TO_PORTFOLIO = 'ADD_STOCK_TO_PORTFOLIO';
-const SHIFT_SIDEBAR = 'SHIFT_SIDEBAR';
+const ADD_NEW_OBSERVABLE_STOCK = 'stock/ADD_NEW_OBSERVABLE_STOCK';
+const DELETE_OBSERVABLE_STOCK = 'stock/DELETE_OBSERVABLE_STOCK';
+const ADD_STOCK_TO_WATCHLIST = 'stock/ADD_STOCK_TO_WATCHLIST';
+const ADD_STOCK_TO_PORTFOLIO = 'stock/ADD_STOCK_TO_PORTFOLIO';
 
 let initialState = {
     observableStock: [],
     watchList: [],
     portfolioList: [],
-    stockFunction,
+    sourceDataType,
     apikey,
-    stockData: null,
-    isSidebarOpen: false
+    stockData: null
 }
 
 export const stockReducer = (state = initialState, action) => {
@@ -48,33 +46,23 @@ export const stockReducer = (state = initialState, action) => {
                 observableStock: [...state.observableStock.filter((e, index) => index != action.stockId)]
             }
         }
-        case SHIFT_SIDEBAR: {
-            return {
-                ...state,
-                isSidebarOpen: !state.isSidebarOpen
-            }
-        }
         default:
             return state
     }
 }
 
-export const shiftSidebar = () => ({type: SHIFT_SIDEBAR})
 export const setStockToObservable = stockName => ({type: ADD_NEW_OBSERVABLE_STOCK, stockName})
 export const deleteObservableStock = stockId => ({type:DELETE_OBSERVABLE_STOCK, stockId})
-
 export const addStockToWatchlist = stockName => ({type:ADD_STOCK_TO_WATCHLIST, stockName})
 export const addStockToPortfolio = stockName => ({type:ADD_STOCK_TO_PORTFOLIO, stockName})
 
-export const addStockToObservable = ( stockFunction, currentStock, apikey ) => (dispatch) => {
-    StockAPI.getStock( stockFunction, currentStock, apikey )
-    .then( res => {
-        debugger
-        if ('Error Message' in res) {
-            return 'error'
-        } else {
-            dispatch(setStockToObservable(stockInstance(res))
-            )
-        }
-    })
+export const addStockToObservable = ( sourceDataType, currentStock, apikey ) => async dispatch => {
+    let response = await StockAPI.getStock( sourceDataType, currentStock, apikey )
+    if (response.hasOwnProperty("Error Message")) {
+        dispatch(stopSubmit('stockPickerForm', { _error: response['Error Message'] }))
+        return console.log('error')
+    } else {
+        dispatch(setStockToObservable(stockInstance(response)))
+        dispatch(stopSubmit('stockPickerForm', { _error: response[''] }))
+    }
 }

@@ -1,16 +1,14 @@
 import './App.css';
 import { connect } from 'react-redux';
 import React from 'react'
-import styled from 'styled-components';
-import { shiftSidebar } from './redux/reducers/stockReducer';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Sidebar from './view/Bars/Sidebar';
-import TopNavbar from './view/Bars/TopNavbar';
+import TopNavbar from './view/Bars/TopNavbar/TopNavbar';
 import StockChartPanelContainer from './view/mainContent/stockPanel/StockChartPanelContainer';
 
 const drawerWidth = 240;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -35,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const App = (props) => {
   const classes = useStyles();
   
@@ -47,7 +46,7 @@ const App = (props) => {
       <TopNavbar handleDrawerOpen={handleDrawerOpen} open={open}/>
       <Sidebar handleDrawerClose={handleDrawerClose} open={open}/>
       <main className={clsx(classes.content, {[classes.contentShift]: open })}>
-          <StockChartPanelContainer />
+        <StockChartPanelContainer />
       </main>
     </div>
   );
@@ -56,4 +55,5 @@ const App = (props) => {
 let mapStateToProps = (state) => ({
   isSidebarOpen: state.stockData.isSidebarOpen
 })
-export default connect(mapStateToProps, { shiftSidebar })(App);
+
+export default connect(mapStateToProps, {})(App);

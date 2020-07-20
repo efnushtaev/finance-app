@@ -88,10 +88,9 @@ const StockPickerForm = ({handleSubmit, error}) => {
 
 const StockPickerFormReduxForm = reduxForm({form: 'stockPickerForm'})(StockPickerForm);
 
-const StockPicker = ({sourceDataType, apiKey, addStockToObservable}) => {
+const StockPicker = ({sourceDataType, apiKey, setNewStock}) => {
     let addNewStock = (values) => {
-        console.log(values)
-        addStockToObservable(sourceDataType, values.stock, apiKey)
+        setNewStock(sourceDataType, values.stock, apiKey)
     }
     return (
       <StockPickerFormReduxForm onSubmit={addNewStock}/>

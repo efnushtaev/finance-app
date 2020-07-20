@@ -84,14 +84,14 @@ const TopNavbar = (props) => {
         <IconButton
           color="inherit"
           aria-label="open drawer"
-          onClick={props.handleDrawerOpen}
+          onClick={props.handleDrawerToggle}
           edge="start"
           className={classes.menuButton}
         >
         <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap>
-          Persistent drawer
+          Finance Adviser
         </Typography>
           <StockPickerContainer />
       </Toolbar>

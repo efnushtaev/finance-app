@@ -36,15 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 const App = (props) => {
   const classes = useStyles();
+  const {watchList, portfolioList} = props;
   
   const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleDrawerToggle = () => setOpen(!open);
 
   return (
     <div className={classes.root}>
-      <TopNavbar handleDrawerOpen={handleDrawerOpen} open={open}/>
-      <Sidebar handleDrawerClose={handleDrawerClose} open={open}/>
+      <TopNavbar handleDrawerToggle={handleDrawerToggle} open={open}/>
+      <Sidebar 
+        open={open}
+        watchList={watchList}
+        portfolioList={portfolioList}/>
       <main className={clsx(classes.content, {[classes.contentShift]: open })}>
         <StockChartPanelContainer />
       </main>
@@ -53,7 +56,9 @@ const App = (props) => {
 }
 
 let mapStateToProps = (state) => ({
-  isSidebarOpen: state.stockData.isSidebarOpen
+  isSidebarOpen: state.stockData.isSidebarOpen,
+  watchList: state.stockData.watchList,
+  portfolioList: state.stockData.portfolioList
 })
 
 export default connect(mapStateToProps, {})(App);

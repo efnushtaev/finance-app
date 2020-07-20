@@ -1,6 +1,6 @@
 import React from 'react';
 import StockPicker from './StockPicker';
-import { addStockToObservable} from '../../../../redux/reducers/stockReducer';
+import { setNewStock} from '../../../../redux/reducers/stockReducer';
 import { connect } from 'react-redux';
 import { getSourceDataType, getApiKey } from '../../../../redux/Selectors/stockSelectors';
 
@@ -10,7 +10,7 @@ class StockPickerContainer extends React.Component {
             <StockPicker 
                 sourceDataType={this.props.sourceDataType}
                 apiKey={this.props.apiKey}
-                addStockToObservable={this.props.addStockToObservable}
+                setNewStock={this.props.setNewStock}
             />
         )
     }
@@ -21,4 +21,4 @@ let mapStateToProps = (state) => ({
     apiKey: getApiKey(state)
 })
 
-export default connect(mapStateToProps, {addStockToObservable})(StockPickerContainer)
+export default connect(mapStateToProps, {setNewStock})(StockPickerContainer)

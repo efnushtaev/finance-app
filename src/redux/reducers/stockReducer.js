@@ -51,18 +51,26 @@ export const stockReducer = (state = initialState, action) => {
     }
 }
 
-export const setStockToObservable = stockName => ({type: ADD_NEW_OBSERVABLE_STOCK, stockName})
+export const addStockToObservable = stockName => ({type: ADD_NEW_OBSERVABLE_STOCK, stockName})
 export const deleteObservableStock = stockId => ({type:DELETE_OBSERVABLE_STOCK, stockId})
 export const addStockToWatchlist = stockName => ({type:ADD_STOCK_TO_WATCHLIST, stockName})
 export const addStockToPortfolio = stockName => ({type:ADD_STOCK_TO_PORTFOLIO, stockName})
 
-export const addStockToObservable = ( sourceDataType, currentStock, apikey ) => async dispatch => {
+export const setNewStock = (sourceDataType, currentStock, apikey) => async dispatch => {
     let response = await StockAPI.getStock( sourceDataType, currentStock, apikey )
     if (response.hasOwnProperty("Error Message")) {
         dispatch(stopSubmit('stockPickerForm', { _error: response['Error Message'] }))
         return console.log('error')
     } else {
-        dispatch(setStockToObservable(stockInstance(response)))
+        dispatch(addStockToObservable(stockInstance(response)))
         dispatch(stopSubmit('stockPickerForm', { _error: response[''] }))
     }
+}
+
+export const dispatcher = {
+    addStockToObservable,
+    deleteObservableStock,
+    addStockToWatchlist,
+    addStockToPortfolio,
+    setNewStock
 }

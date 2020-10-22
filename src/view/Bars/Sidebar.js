@@ -92,8 +92,18 @@ const Sidebar = (props) => {
     setOpen(result);
   };
 
-  const handleListClick = (stockName) => {
-    props.setNewStock(sourceDataType, stockName, apiKey)
+  const handleListClick = (stockName, e) => {
+    const target = e.target.attributes.ariaLabel.value
+    return target !== "Close" && props.onSetNewStockClick(sourceDataType, stockName, apiKey)
+  }
+
+  const handleDeleteStockItem = (stockName, e) => {
+    let localStorageItem = localStorage.getItem('portfolioList')
+    let localStorageItemFiltered = localStorageItem.split('_').filter((el) => {
+      return stockName !== el
+    }).join('_')
+    localStorage.setItem('portfolioList', localStorageItemFiltered)
+    return props.onDeleteStockItem(stockName)
   }
 
   return (
@@ -115,8 +125,8 @@ const Sidebar = (props) => {
         <Collapse in={open[0]} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {portfolioList.map((el) => {
-              return  <ListItem  onClick={() => handleListClick(el)} button className={classes.nested}>
-                <p>{el}</p>
+              return  <ListItem ariaLabel="listItem" onClick={(e) => handleListClick(el, e)} button className={classes.nested}>
+                <p><span>{el}</span><button ariaLabel="Close" onClick={(e) => handleDeleteStockItem(el, e)}>close</button></p>
               </ListItem>
             })}
           </List>
@@ -144,7 +154,8 @@ const Sidebar = (props) => {
 }
 
 let mapDispatchToProps = {
-  setNewStock: dispatcher.setNewStock
+  onSetNewStockClick: dispatcher.setNewStock,
+  onDeleteStockItem: dispatcher.deleteStockFromPortfolio
 }
 
 let mapStateToProps = (state) => ({

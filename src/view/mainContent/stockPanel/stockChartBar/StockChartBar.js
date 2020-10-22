@@ -11,19 +11,36 @@ flex-direction: row;
     }
 `
 
-const StockChartBar = ({
-    stockName,
-    stockValue,
-    priceDifferValue,
-    advice,
-    stochasticValue,
-    rsiValue,
-    id,
-    deleteObservableStock,
-    addStockToPortfolio,
-    addStockToWatchlist
 
-}) => {
+const StockChartBar = (props) => {
+    const {
+        stockName,
+        stockValue,
+        priceDifferValue,
+        advice,
+        stochasticValue,
+        rsiValue,
+        id,
+        deleteObservableStock,
+        addStockToPortfolio,
+        addStockToWatchlist
+    } = props
+
+    const handleStockToPortfolioAdd = () => {
+        let localStorageString = localStorage.getItem('portfolioList');
+        debugger
+        if(!!localStorageString) {
+            if (localStorageString.indexOf(stockName) === -1) {
+                addStockToPortfolio(stockName)
+                localStorageString = `${localStorageString}_${stockName}`;
+                localStorage.setItem('portfolioList', localStorageString)
+            } return null
+        } else {
+            addStockToPortfolio(stockName)
+            localStorageString = `${stockName}`;
+            localStorage.setItem('portfolioList', localStorageString)
+        }
+    }
     return stockName ?
         <StyledWrapper>
             <div>{advice}</div>
@@ -42,7 +59,7 @@ const StockChartBar = ({
                 <div>Rsi:{rsiValue}</div>
             </div>
             <div>
-                <button onClick={() => {addStockToPortfolio(stockName)} }>AddToPortfolio</button>
+                <button onClick={() => handleStockToPortfolioAdd(stockName) }>AddToPortfolio</button>
                 <button onClick={() => {addStockToWatchlist(stockName)} }>AddToWatchlist</button>
             </div>
             <button onClick={() => {deleteObservableStock(id)} }>x</button>

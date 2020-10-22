@@ -7,6 +7,19 @@ import { Provider } from 'react-redux';
 import store from './redux/redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {HashRouter, BrowserRouter} from 'react-router-dom';
+import { addStockToPortfolio } from './redux/reducers/stockReducer';
+
+
+function localStorageLoading() {
+    const portfolioList = localStorage.getItem('portfolioList')
+    if(portfolioList !== '') {
+        portfolioList.split('_').forEach((el) => {
+            store.dispatch(addStockToPortfolio(el))
+        })
+    }
+}
+
+localStorageLoading();
 
 ReactDOM.render(
     <HashRouter>

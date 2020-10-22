@@ -1,4 +1,5 @@
-const stockDataModified = data => {
+// preparing api-data to usefull format
+function stockDataModified (data) {
     let stockTimeframe = "Time Series (Daily)";
     let stockData = data[stockTimeframe];
     let resultData = [];
@@ -10,16 +11,16 @@ const stockDataModified = data => {
     } return null
 }
 
-const getCurrentStockValue = data => {
+function getCurrentStockValue (data) {
     return data[data.length - 1].close
 }
 
-const getPriceDifferValue = data => {
+function getPriceDifferValue (data) {
     let differ = (data[data.length - 1].close - data[data.length - 2].close).toFixed(5)
     return data[0].close < data[1].close ? `+${differ}` : `${differ}`
 }
 
-export const stockInstance = data => ({
+export const stockInstance = (data) => ({
         stockName: data['Meta Data']['2. Symbol'],
         stockData: stockDataModified(data),
         stockValue: getCurrentStockValue(stockDataModified(data)),
